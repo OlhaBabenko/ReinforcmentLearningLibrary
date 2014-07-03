@@ -1,16 +1,17 @@
-package java.model;
+package java.makers;
 
+import java.model.*;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class States<T> {
+public class StatesMacker<T> {
 
     private int numberOfAgents;
     private List<T> statesList = new LinkedList<>();
 
-    public States(T... states) {
-
+    public StatesMacker(int numberOfAgents, T... states) {
+        this.numberOfAgents = numberOfAgents;
         initializeStates(states);
     }
 
@@ -24,6 +25,6 @@ public class States<T> {
     }
 
     private void createStatesMap() {
-        List states = new LinkedList();
+       
     }
 }
