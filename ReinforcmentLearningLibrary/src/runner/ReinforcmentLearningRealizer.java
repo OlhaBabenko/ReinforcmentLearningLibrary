@@ -1,4 +1,4 @@
-package java.runner;
+package runner;
 
 
 import java.util.LinkedList;

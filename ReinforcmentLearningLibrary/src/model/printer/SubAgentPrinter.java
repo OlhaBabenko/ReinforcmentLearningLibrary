@@ -1,4 +1,4 @@
-package java.model.printer;
+package model.printer;
 
 import java.util.*;
 
@@ -21,16 +21,17 @@ public final class SubAgentPrinter<T1, T2> {
     }
 
     public static void printAgentID(int agentId) {
-        System.out.println("SubAgent #" + agentId + ":\n");
+        System.out.println("SubAgent #" + agentId + ":");
     }
 
     private void printStatesList(List<T1> statesList) {
-        System.out.println("    states:\n");
+        System.out.print("    states: ");
         statesList.stream().forEach(state -> System.out.print(state + " "));
     }
 
     private void printActionsList(List<T2> actionsList) {
-        System.out.println("    actions:\n");
+        System.out.print("\n    actions: ");
         actionsList.stream().forEach(action -> System.out.print(action + " "));
+        System.out.print("\n");
     }
 }

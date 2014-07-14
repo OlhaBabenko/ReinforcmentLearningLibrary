@@ -1,4 +1,4 @@
-package java.makers;
+package makers;
 
 import java.util.*;
 
