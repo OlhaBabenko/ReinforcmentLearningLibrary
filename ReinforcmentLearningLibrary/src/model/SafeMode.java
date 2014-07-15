@@ -3,8 +3,8 @@ package model;
 import java.util.Scanner;
 
 /**
- * Class provide excluding changes of agent's states or actions without your
- * agree
+ * Class provides excluding of changes in agent's states or actions without your
+ * agreement
  *
  * @author Olha_Babenko
  */
