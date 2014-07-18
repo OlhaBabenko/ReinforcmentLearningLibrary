@@ -7,19 +7,19 @@ import java.util.*;
 public class SubAgent<T1, T2> implements SubAgentInterface<T1, T2> {
 
     private int agentId;
+    private String agentName;
     private List<T1> statesList = new ArrayList<>();
     private List<T2> actionsList = new ArrayList<>();
-    private boolean safeMode;
 
 //    public SubAgent(int agentId) {
 //        this.agentId = agentId;
 //    }
-    public SubAgent(int agentId, boolean safeMode) {
+    public SubAgent(int agentId, String agentName) {
         this.agentId = agentId;
-        this.safeMode = safeMode;
+        this.agentName = agentName;
     }
 
-    public SubAgent(int agentId, List<T1> statesList, List<T2> actionsList) {
+    public SubAgent(int agentId, String agentName, List<T1> statesList, List<T2> actionsList) {
         this.agentId = agentId;
         this.statesList = statesList;
         this.actionsList = actionsList;
@@ -36,22 +36,20 @@ public class SubAgent<T1, T2> implements SubAgentInterface<T1, T2> {
     }
 
     @Override
-    public void setAgentStates(T1... states) {
-        if (!statesList.isEmpty()) {
-            if (safeMode) {
-                changeAgentStatesInSafeMode(states);
-            } else {
-                changeAgentStates(states);
-                System.out.println("States were changed!");
-            }
-        } else {
-            this.statesList.addAll(Arrays.asList(states));
-        }
+    public List<T2> getAgentActionsList() {
+        return actionsList;
     }
 
+    
+    /*
+    @param states states in wich can agent can be
+    */
     @Override
-    public void changeAgentStates(T1... states) {
-        this.statesList.clear();
+    public void setAgentStates(T1... states) {
+        if (!statesList.isEmpty()) {
+            this.statesList.clear();
+            System.out.println("States were changed!");
+        }
         this.statesList.addAll(Arrays.asList(states));
     }
 
@@ -59,11 +57,6 @@ public class SubAgent<T1, T2> implements SubAgentInterface<T1, T2> {
     public void changeAgentActions(T2... actions) {
         this.actionsList.clear();
         this.actionsList.addAll(Arrays.asList(actions));
-    }
-
-    @Override
-    public List<T2> getAgentActionsList() {
-        return actionsList;
     }
 
     @Override
