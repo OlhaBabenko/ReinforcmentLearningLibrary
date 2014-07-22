@@ -1,7 +1,6 @@
 package model;
 
 import model.interfaces.SubAgentInterface;
-import model.printer.SubAgentPrinter;
 import java.util.*;
 
 public class SubAgent<T1, T2> implements SubAgentInterface<T1, T2> {
@@ -40,63 +39,60 @@ public class SubAgent<T1, T2> implements SubAgentInterface<T1, T2> {
         return actionsList;
     }
 
-    
     /*
-    @param states states in wich can agent can be
-    */
+     @param states states in wich agent can be
+     */
     @Override
     public void setAgentStates(T1... states) {
-        if (!statesList.isEmpty()) {
-            this.statesList.clear();
-            System.out.println("States were changed!");
-        }
-        this.statesList.addAll(Arrays.asList(states));
+        clearStatesList();
+        statesList.addAll(Arrays.asList(states));
     }
 
-    @Override
-    public void changeAgentActions(T2... actions) {
-        this.actionsList.clear();
-        this.actionsList.addAll(Arrays.asList(actions));
+    private void clearStatesList() {
+        if (!statesList.isEmpty()) {
+            statesList.clear();
+            System.out.println("WARNING: States for agent \"" + agentName + "\" were changed!");
+        }
     }
 
     @Override
     public void setAgentActions(T2... actions) {
+        clearActionsList();
+        actionsList.addAll(Arrays.asList(actions));
+    }
+
+    private void clearActionsList() {
         if (!actionsList.isEmpty()) {
-            if (safeMode) {
-                changeAgentActionsInSafeMode(actions);
-            } else {
-                changeAgentActions(actions);
-                System.out.println("Actions were changed!");
-            }
-        } else {
-            this.actionsList.addAll(Arrays.asList(actions));
+            actionsList.clear();
+            System.out.println("WARNING: Actions for agent \"" + agentName + "\" were changed!");
         }
-    }
-
-    private void changeAgentActionsInSafeMode(T2[] actions) {
-        if (SafeMode.askForMakingChangesInStatesOrActions("Actions")) {
-            changeAgentActions(actions);
-            System.out.println("Actions were changed!");
-        }
-    }
-
-    private void changeAgentStatesInSafeMode(T1[] states) {
-        if (SafeMode.askForMakingChangesInStatesOrActions("States")) {
-            changeAgentStates(states);
-            System.out.println("States were changed!");
-        }
-    }
-
-    @Override
-    public void printAgentInfo() {
-        SubAgentPrinter subAgentPrinter = new SubAgentPrinter(agentId, statesList, actionsList);
-        subAgentPrinter.printAgentInfo();
     }
 
     @Override
     public String toString() {
-        SubAgentPrinter.printAgentID(agentId);
-        return "(for detail info use printAgentInfo() method)";
+        return "SubAgent #" + agentId + " - \"" + agentName + "\"\n(for detail info use printAgentInfo() method)";
+    }
+
+    @Override
+    public void printAgentInfo() {
+        printAgentIDAndName();
+        printStatesList();
+        printActionsList();
+    }
+
+    private void printAgentIDAndName() {
+        System.out.println("SubAgent #" + agentId + " - \"" + agentName + "\" :");
+    }
+
+    private void printStatesList() {
+        System.out.print("    states: ");
+        statesList.stream().forEach(state -> System.out.print(state + " "));
+    }
+
+    private void printActionsList() {
+        System.out.print("\n    actions: ");
+        actionsList.stream().forEach(action -> System.out.print(action + " "));
+        System.out.print("\n");
     }
 
     @Override
@@ -125,67 +121,4 @@ public class SubAgent<T1, T2> implements SubAgentInterface<T1, T2> {
         }
         return Objects.equals(this.actionsList, other.actionsList);
     }
-
-    public boolean isSafeMode() {
-        return safeMode;
-    }
-
-    public void setSafeMode(boolean safeMode) {
-        this.safeMode = safeMode;
-    }
 }
-
-//    private void askForMakingChangesInActions(T2... actions) {
-//        System.out.println("Actions were already defined! Do you realy want to change them?");
-//
-//        Scanner answer = new Scanner(System.in);
-//        boolean needNext = true;
-//
-//        while (needNext) {
-//            if (answer.hasNext()) {
-//                needNext = checkAnswer(answer.next(), actions);
-//            }
-//        }
-//    }
-//    private void askForMakingChangesInStates(T1... states) {
-//        System.out.println("States were already defined! Do you realy want to change them?");
-//
-//        Scanner answer = new Scanner(System.in);
-//        boolean needNext = true;
-//
-//        while (needNext) {
-//            if (answer.hasNext()) {
-//                needNext = checkAnswer(answer.next(), states);
-//            }
-//        }
-//    }
-//
-//    private boolean checkAnswer(String answer, T1... states) {
-//        if (null != answer) {
-//            switch (answer) {
-//                case "y":
-//                case "Y":
-//                    changeAgentStates(states);
-//                    return false;
-//                case "n":
-//                case "N":
-//                    return false;
-//                default:
-//                    System.out.println("Please, enter 'Y' or 'N': ");
-//            }
-//        }
-//        return true;
-//    }
-//
-//    private void askForMakingChangesInActions(T2... actions) {
-//        System.out.println("Actions were already defined! Do you realy want to change them?");
-//
-//        Scanner answer = new Scanner(System.in);
-//        boolean needNext = true;
-//
-//        while (needNext) {
-//            if (answer.hasNext()) {
-//                needNext = checkAnswer(answer.next(), actions);
-//            }
-//        }
-//    }

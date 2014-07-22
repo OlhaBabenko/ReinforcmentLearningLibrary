@@ -12,12 +12,15 @@ package model;
 public class RunToDelete {
 
     public static void main(String[] args) {
-        SubAgent<String, String> ag = new SubAgent<>(1,true);
-
+        SubAgent ag = new SubAgent(1, "cart");
         ag.setAgentStates("a", "b");
+        ag.setAgentActions("UP", "DOWN");
         ag.printAgentInfo();
 
         ag.setAgentStates("c", "d");
+        ag.setAgentActions("STOP", "UP");
         ag.printAgentInfo();
+        System.out.println("");
+        System.out.println(ag.toString());
     }
 }
