@@ -1,18 +1,15 @@
 package model;
 
-import model.interfaces.SubAgentInterface;
 import java.util.*;
 
-public class SubAgent<T1, T2> implements SubAgentInterface<T1, T2> {
+public abstract class SubAgent<T1, T2> {
 
     private int agentId;
     private String agentName;
     private List<T1> statesList = new ArrayList<>();
     private List<T2> actionsList = new ArrayList<>();
+    private Map<Integer, T1> statesMap = new HashMap<>();
 
-//    public SubAgent(int agentId) {
-//        this.agentId = agentId;
-//    }
     public SubAgent(int agentId, String agentName) {
         this.agentId = agentId;
         this.agentName = agentName;
@@ -22,19 +19,17 @@ public class SubAgent<T1, T2> implements SubAgentInterface<T1, T2> {
         this.agentId = agentId;
         this.statesList = statesList;
         this.actionsList = actionsList;
+        initializeStatesMap();
     }
 
-    @Override
     public int getAgentId() {
         return agentId;
     }
 
-    @Override
     public List<T1> getAgentStatesList() {
         return statesList;
     }
 
-    @Override
     public List<T2> getAgentActionsList() {
         return actionsList;
     }
@@ -42,20 +37,19 @@ public class SubAgent<T1, T2> implements SubAgentInterface<T1, T2> {
     /*
      @param states states in wich agent can be
      */
-    @Override
     public void setAgentStates(T1... states) {
         clearStatesList();
         statesList.addAll(Arrays.asList(states));
+        initializeStatesMap();
     }
 
     private void clearStatesList() {
         if (!statesList.isEmpty()) {
             statesList.clear();
-            System.out.println("WARNING: States for agent \"" + agentName + "\" were changed!");
+            System.out.println("\033[31mWARNING: States for agent \"" + agentName + "\" were changed!\033[0m");
         }
     }
 
-    @Override
     public void setAgentActions(T2... actions) {
         clearActionsList();
         actionsList.addAll(Arrays.asList(actions));
@@ -64,16 +58,10 @@ public class SubAgent<T1, T2> implements SubAgentInterface<T1, T2> {
     private void clearActionsList() {
         if (!actionsList.isEmpty()) {
             actionsList.clear();
-            System.out.println("WARNING: Actions for agent \"" + agentName + "\" were changed!");
+            System.out.println("\033[31mWARNING: Actions for agent \"" + agentName + "\" were changed!\033[0m");
         }
     }
 
-    @Override
-    public String toString() {
-        return "SubAgent #" + agentId + " - \"" + agentName + "\"\n(for detail info use printAgentInfo() method)";
-    }
-
-    @Override
     public void printAgentInfo() {
         printAgentIDAndName();
         printStatesList();
@@ -95,30 +83,39 @@ public class SubAgent<T1, T2> implements SubAgentInterface<T1, T2> {
         System.out.print("\n");
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 53 * hash + this.agentId;
-        hash = 53 * hash + Objects.hashCode(this.statesList);
-        hash = 53 * hash + Objects.hashCode(this.actionsList);
-        return hash;
-    }
+    private void initializeStatesMap() {
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final SubAgent<?, ?> other = (SubAgent<?, ?>) obj;
-        if (this.agentId != other.agentId) {
-            return false;
-        }
-        if (!Objects.equals(this.statesList, other.statesList)) {
-            return false;
-        }
-        return Objects.equals(this.actionsList, other.actionsList);
     }
+//
+//    @Override
+//    public String toString() {
+//        return "SubAgent #" + agentId + " - \"" + agentName + "\"\n(for detail info use printAgentInfo() method)";
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        int hash = 3;
+//        hash = 53 * hash + this.agentId;
+//        hash = 53 * hash + Objects.hashCode(this.statesList);
+//        hash = 53 * hash + Objects.hashCode(this.actionsList);
+//        return hash;
+//    }
+//
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (obj == null) {
+//            return false;
+//        }
+//        if (getClass() != obj.getClass()) {
+//            return false;
+//        }
+//        final SubAgent<?, ?> other = (SubAgent<?, ?>) obj;
+//        if (this.agentId != other.agentId) {
+//            return false;
+//        }
+//        if (!Objects.equals(this.statesList, other.statesList)) {
+//            return false;
+//        }
+//        return Objects.equals(this.actionsList, other.actionsList);
+//    }
 }
