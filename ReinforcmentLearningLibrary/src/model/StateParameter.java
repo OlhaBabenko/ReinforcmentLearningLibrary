@@ -10,37 +10,32 @@ import java.util.logging.Logger;
 /*
  *Class describes one of the State's parameter. Contains Set of values which this parameter can take.
  */
-//public class StateParameter<T> {
-public final class StateParameter {
+public final class StateParameter<T> {
 
-    //private List<T> parameterValues;
     private String parameterName;
-    private Set<Double> parameterValues = new HashSet<>();
+    private Set<T> parameterValues = new HashSet<>();
 
     public StateParameter(String parameterName, double startValue, double endValue, double step) {
         this.parameterName = parameterName;
-        setParameterValues(startValue, endValue, step);
+        fillParameterValues(startValue, endValue, step);
     }
 
-    public StateParameter(String parameterName, Set<Double> parameterValues) {
+    public StateParameter(String parameterName, Set<T> parameterValues) {
+        this.parameterName = parameterName;
         this.parameterValues = parameterValues;
     }
 
-    public Set<Double> getParameterValues() {
-        return parameterValues;
-    }
-
     //maybe add external/internal intervals
-    void setParameterValues(double startValue, double endValue, double step) {
+    private void fillParameterValues(Double startValue, Double endValue, Double step) {
         tryOnBadIntervalException(startValue, endValue, step);
 
-        while (startValue != endValue) {
-            parameterValues.add(startValue);
+        while (startValue <= endValue) {
+            parameterValues.add((T) startValue);
             startValue += step;
         }
     }
 
-    void tryOnBadIntervalException(double startValue, double endValue, double step) {
+    private void tryOnBadIntervalException(double startValue, double endValue, double step) {
         try {
             if (startValue < Integer.MIN_VALUE || endValue > Integer.MAX_VALUE) {
                 throw new BadIntervalException("Invalid borders of interval!");
@@ -58,14 +53,25 @@ public final class StateParameter {
         }
     }
 
+    public Set<T> getParameterValues() {
+//        if (parameterValues.isEmpty()) {
+//            intervalParameterValues.stream().forEach((val) -> {
+//                parameterValues.add((T) val);
+//            });
+//        }
+        return parameterValues;
+    }
+
     @Override
     public String toString() {
         return "StateParameter:\n Name = " + parameterName + "(for detailed information use printStateParameter().)";
     }
 
     public void printStateParameter() {
-        System.out.println("StateParameter:\n Name = " + parameterName);
+        System.out.println("StateParameter:\n  Name = " + parameterName);
+        // intervalParameterValues.stream().forEach(s -> System.out.print(s + " "));
+        System.out.print("  Parameter's values: { ");
         parameterValues.stream().forEach(s -> System.out.print(s + " "));
-        System.out.println("\n");
+        System.out.print("}\n");
     }
 }
