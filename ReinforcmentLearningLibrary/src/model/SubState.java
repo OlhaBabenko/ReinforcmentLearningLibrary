@@ -4,12 +4,12 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SubStates<T> {
+public class SubState<T> {
 
     private int stateID;
     private List<T> statesList = new LinkedList<>();
 
-    public SubStates(T... states) {
+    public SubState(T... states) {
         initializeStates(states);
     }
 
