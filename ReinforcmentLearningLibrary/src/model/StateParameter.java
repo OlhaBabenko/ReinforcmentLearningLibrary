@@ -8,7 +8,8 @@ import java.util.logging.Logger;
 
 /**
  * StateParameter is final class which describes one of the {@link SubState}'s
- * parameters.
+ * parameters. Part of {@link SubAgent} which this StateParameter describes
+ * defined by user according to {@link SubAgent} structure.
  * <p>
  * This class determines:
  * <ul>
