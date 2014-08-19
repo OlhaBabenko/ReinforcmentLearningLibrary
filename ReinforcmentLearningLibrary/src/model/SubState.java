@@ -2,7 +2,10 @@ package model;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * SubState is class which describes states in which {@link SubAgent} can be
@@ -22,6 +25,7 @@ import java.util.Map;
 public class SubState {
 
     private SubAgent ownerAgent;
+    private Set<StateParameter> statesParametersSet = new HashSet<>();
     private Map<Integer, StateParameter> stateParametersMap = new HashMap<>();
 
     /**
@@ -40,27 +44,33 @@ public class SubState {
     public SubState(SubAgent ownerAgent, StateParameter... statesParameters) {
         this.ownerAgent = ownerAgent;
         initializeSubStates(statesParameters);
+        initializeStateParametersMap();
     }
 
-    //////
-    /////
-    ////add new StateParameter after SubState initialization
-    /////
-    /////
-    ////
     private void initializeSubStates(StateParameter[] statesParameters) {
         if (statesParameters.length != 0) {
-            initializeStateParametersMap(statesParameters);
+            statesParametersSet.addAll(Arrays.asList(statesParameters));
         } else {
-            System.out.println("SubStates for agent\"" + ownerAgent + "\" cannot be initialized!");
+            System.out.println("\033[31mWARNING: SubState for agent\"" + ownerAgent + "\" is empty! To initialize this SubState add State's Parameters using addStatesParameter() method!\033[31m");
             System.exit(1);
         }
     }
 
-    private void initializeStateParametersMap(StateParameter[] statesParameters) {
-        for (int i = 0; i < statesParameters.length; i++) {
-            stateParametersMap.put(++i, statesParameters[i]);
+    //To change!!!!!!!!!!!
+    private void initializeStateParametersMap() {
+        Iterator iteratorOfStatesParamSet = statesParametersSet.iterator();
+        int indexOfStatesParam = 1;
+        while (iteratorOfStatesParamSet.hasNext()) {
+            stateParametersMap.put(indexOfStatesParam, (StateParameter) iteratorOfStatesParamSet.next());
+            indexOfStatesParam++;
         }
+    }
+
+    public void addStatesParameter() {
+
+    }
+
+    public void removeStatesParameter() {
     }
 
     public SubAgent getOwnerAgent() {
