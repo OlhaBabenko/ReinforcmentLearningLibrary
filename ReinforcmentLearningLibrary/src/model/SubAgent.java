@@ -2,7 +2,23 @@ package model;
 
 import java.util.*;
 
-public abstract class SubAgent<T1, T2> {
+/**
+ * SubAgent is class which describes agent as the part of MultiAgent which must
+ * be learned. SubAgent has a list of states in which it can be during
+ * Reinforcement Learning and a list of actions which it can do during
+ * Reinforcement Learning. SubState consists of {@link StateParameter}'s which
+ * must be defined earlier by user according to {@link SubAgent} structure.
+ * <p>
+ * This class determines:
+ * <ul>
+ * <li> {@link StateParameter}'s from which states of {@link SubAgent} consist.
+ * <li> stateParameterMap which describes possible states of {@link SubAgent}
+ * during Reinforcement Learning
+ * </ul>
+ *
+ * @author Olha Babenko
+ */
+public abstract class SubAgent {
 
     private int agentId;
     private String agentName;
@@ -10,6 +26,14 @@ public abstract class SubAgent<T1, T2> {
     private List<T2> actionsList = new ArrayList<>();
     private Map<Integer, T1> statesMap = new HashMap<>();
 
+    /**
+     *
+     * Class constructor specifying state in which certain agent - owner of
+     * SubState - can be during Reinforcement Learning.
+     *
+     * @param agentId
+     * @param agentName
+     */
     public SubAgent(int agentId, String agentName) {
         this.agentId = agentId;
         this.agentName = agentName;
