@@ -8,10 +8,10 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * SubState is class which describes states in which {@link SubAgent} can be
- * during Reinforcement Learning. SubState consists of {@link StateParameter}'s
- * which must be defined earlier by user according to {@link SubAgent}
- * structure.
+ * SubState is final class which describes states in which {@link SubAgent} can
+ * be during Reinforcement Learning. SubState consists of
+ * {@link StateParameter}'s which must be defined earlier by user according to
+ * {@link SubAgent} structure.
  * <p>
  * This class determines:
  * <ul>
@@ -22,7 +22,7 @@ import java.util.Set;
  *
  * @author Olha Babenko
  */
-public class SubState {
+public final class SubState {
 
     private SubAgent ownerAgent;
     private Set<StateParameter> statesParametersSet = new HashSet<>();
