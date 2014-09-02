@@ -20,92 +20,50 @@ import java.util.*;
  */
 public abstract class SubAgent {
 
-    private int agentId;
     private String agentName;
-    private List<T1> statesList = new ArrayList<>();
-    private List<T2> actionsList = new ArrayList<>();
-    private Map<Integer, T1> statesMap = new HashMap<>();
+    private SubState setOfStates;
+    private SubAction setOfActions;
 
     /**
      *
      * Class constructor specifying state in which certain agent - owner of
      * SubState - can be during Reinforcement Learning.
      *
-     * @param agentId
      * @param agentName
      */
-    public SubAgent(int agentId, String agentName) {
-        this.agentId = agentId;
+    public SubAgent(String agentName) {
         this.agentName = agentName;
     }
 
-    public SubAgent(int agentId, String agentName, List<T1> statesList, List<T2> actionsList) {
-        this.agentId = agentId;
-        this.statesList = statesList;
-        this.actionsList = actionsList;
-        initializeStatesMap();
+    public SubAgent(String agentName, SubState statesOfSubAgent, SubAction actionsOfSubAgent) {
+        this.agentName = agentName;
+        this.setOfStates = statesOfSubAgent;
+        this.setOfActions = actionsOfSubAgent;
     }
 
-    public int getAgentId() {
-        return agentId;
+    public SubAgent(String agentName, StateParameter[] statesParameters, String[] actions) {
+        this.agentName = agentName;
+        this.setOfStates = new SubState(statesParameters);
+        this.setOfActions = new SubAction(actions);
     }
 
-    public List<T1> getAgentStatesList() {
-        return statesList;
-    }
-
-    public List<T2> getAgentActionsList() {
-        return actionsList;
-    }
-
-    /*
-     @param states states in wich agent can be
-     */
-    public void setAgentStates(T1... states) {
-        clearStatesList();
-        statesList.addAll(Arrays.asList(states));
-        initializeStatesMap();
-    }
-
-    private void clearStatesList() {
-        if (!statesList.isEmpty()) {
-            statesList.clear();
-            System.out.println("\033[31mWARNING: States for agent \"" + agentName + "\" were changed!\033[0m");
-        }
-    }
-
-    public void setAgentActions(T2... actions) {
-        clearActionsList();
-        actionsList.addAll(Arrays.asList(actions));
-    }
-
-    private void clearActionsList() {
-        if (!actionsList.isEmpty()) {
-            actionsList.clear();
-            System.out.println("\033[31mWARNING: Actions for agent \"" + agentName + "\" were changed!\033[0m");
-        }
-    }
-
+    //EDIT!!!!!!!
     public void printAgentInfo() {
-        printAgentIDAndName();
-        printStatesList();
-        printActionsList();
+        System.out.println("SubAgent \"" + agentName + "\" :");
+//        printStatesList();
+//        printActionsList();
     }
-
-    private void printAgentIDAndName() {
-        System.out.println("SubAgent #" + agentId + " - \"" + agentName + "\" :");
-    }
-
-    private void printStatesList() {
-        System.out.print("    states: ");
-        statesList.stream().forEach(state -> System.out.print(state + " "));
-    }
-
-    private void printActionsList() {
-        System.out.print("\n    actions: ");
-        actionsList.stream().forEach(action -> System.out.print(action + " "));
-        System.out.print("\n");
-    }
+//
+//    private void printStatesList() {
+//        System.out.print("    states: ");
+//        statesList.stream().forEach(state -> System.out.print(state + " "));
+//    }
+//
+//    private void printActionsList() {
+//        System.out.print("\n    actions: ");
+//        actionsList.stream().forEach(action -> System.out.print(action + " "));
+//        System.out.print("\n");
+//    }
 
     private void initializeStatesMap() {
 

@@ -6,11 +6,7 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  *
@@ -21,18 +17,25 @@ public class RunToDelete {
     private static List<Integer> elemList = new ArrayList<>();
 
     public static void main(String[] args) {
-        StateParameter stPar = new StateParameter("position", 1.01, 4.02, 1.03);
-        stPar.printStateParameter();
-        System.out.println(stPar.getParameterValues());
+        SubState subSt = new SubState();
+        StateParameter stateParameter = new StateParameter("stateParameter", 1, 5, 1);
+        StateParameter stateParameter1 = new StateParameter("stateParameter1", 1, 5, 1);
 
-        Set<Double> set = new HashSet<>();
-        set.add(1.0);
-        set.add(4.0);
-        set.add(40.0);
-        StateParameter stPar1 = new StateParameter<>("position", set);
-        stPar1.printStateParameter();
-        System.out.println(stPar1.getParameterValues());
-        Set set1 = new HashSet();
+        subSt.addAllStatesParameters(stateParameter, stateParameter1, stateParameter, stateParameter);
+        System.out.println(subSt.toString());
+
+//////        StateParameter stPar = new StateParameter("position", 1.01, 4.02, 1.03);
+//////        stPar.printStateParameter();
+//////        System.out.println(stPar.getParameterValues());
+//////
+//////        Set<Double> set = new HashSet<>();
+//////        set.add(1.0);
+//////        set.add(4.0);
+//////        set.add(40.0);
+//////        StateParameter stPar1 = new StateParameter<>("position", set);
+//////        stPar1.printStateParameter();
+//////        System.out.println(stPar1.getParameterValues());
+//////        Set set1 = new HashSet();
 //        set1.addAll(set);
 //        Set<Double> set2 = set1;
 //        int j = 0;

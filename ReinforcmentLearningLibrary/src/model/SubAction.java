@@ -33,7 +33,12 @@ public final class SubAction {
      * @param actions
      */
     public void addAllActions(String... actions) {
-        this.actionsOfSubAgent.addAll(Arrays.asList(actions));
+        if (actions.length != 0) {
+            actionsOfSubAgent.addAll(Arrays.asList(actions));
+        } else {
+            System.out.println("\033[31mWARNING: You do not add any action!\033[31m");
+            System.exit(1);
+        }
     }
 
     /**
@@ -54,7 +59,15 @@ public final class SubAction {
      * can do during Reinforcement Learning.
      */
     public void clearActions() {
-        actionsOfSubAgent.clear();
+        if (!actionsOfSubAgent.isEmpty()) {
+            actionsOfSubAgent.clear();
+            System.out.println("\033[31mWARNING: Actions were changed!\033[0m");
+        }
     }
 
+    //TO CHANGE!!!
+    @Override
+    public String toString() {
+        return "SubAction{" + "actionsOfSubAgent=" + actionsOfSubAgent + '}';
+    }
 }

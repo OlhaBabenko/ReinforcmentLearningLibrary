@@ -24,6 +24,7 @@ import java.util.logging.Logger;
  * Reinforcement Learning
  */
 public final class StateParameter<E> {
+        //ADD toString()
 
     private String parameterName;
     private Set<E> parameterValues = new HashSet<>();
@@ -139,5 +140,13 @@ public final class StateParameter<E> {
         System.out.print("  Parameter's values: { ");
         parameterValues.stream().forEach(s -> System.out.print(s + " "));
         System.out.print("}\n");
+    }
+
+    public String getParameterName() {
+        return parameterName;
+    }
+
+    public void setParameterName(String parameterName) {
+        this.parameterName = parameterName;
     }
 }

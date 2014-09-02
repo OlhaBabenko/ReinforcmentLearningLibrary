@@ -23,8 +23,9 @@ import java.util.Set;
  * @author Olha Babenko
  */
 public final class SubState {
+    //ADD CHECK ON STATESPARAMETERS WITH THE SAME NAME
+    //ADD toString()
 
-    private SubAgent ownerAgent;
     private Set<StateParameter> statesParametersSet = new HashSet<>();
     private Map<Integer, StateParameter> stateParametersMap = new HashMap<>();
 
@@ -33,26 +34,36 @@ public final class SubState {
      * Class constructor specifying state in which certain agent - owner of
      * SubState - can be during Reinforcement Learning.
      *
-     * @param ownerAgent {@link SubAgent} over which the learning process is
-     * carried out. It can be only in states defined by {@link StateParameter}'s
-     * during Reinforcement Learning.
      * @param statesParameters components of SubState according to
      * {@link SubAgent}'s structure. They determine scope of values that can
      * describes certain SubState during Reinforcement Learning.
-     * @see #initializeSubStates(model.StateParameter[])
+     * @see #addAllStatesParameters(model.StateParameter[])
      */
-    public SubState(SubAgent ownerAgent, StateParameter... statesParameters) {
-        this.ownerAgent = ownerAgent;
-        initializeSubStates(statesParameters);
+    public SubState(StateParameter... statesParameters) {
+        addAllStatesParameters(statesParameters);
         initializeStateParametersMap();
     }
 
-    private void initializeSubStates(StateParameter[] statesParameters) {
+    public void addAllStatesParameters(StateParameter... statesParameters) {
         if (statesParameters.length != 0) {
             statesParametersSet.addAll(Arrays.asList(statesParameters));
         } else {
-            System.out.println("\033[31mWARNING: SubState for agent\"" + ownerAgent + "\" is empty! To initialize this SubState add State's Parameters using addStatesParameter() method!\033[31m");
-            System.exit(1);
+            System.out.println("\033[31mWARNING: SubState is empty!\033[31m");
+        }
+    }
+
+    public void removeStatesParametersFromSubState(StateParameter... stateParameters) {
+        for (StateParameter stateParameter : stateParameters) {
+            if (statesParametersSet.contains(stateParameter)) {
+                statesParametersSet.remove(stateParameter);
+            }
+        }
+    }
+
+    public void clearSubState() {
+        if (!statesParametersSet.isEmpty()) {
+            statesParametersSet.clear();
+            System.out.println("\033[31mWARNING: States were changed!\033[0m");
         }
     }
 
@@ -66,26 +77,22 @@ public final class SubState {
         }
     }
 
-    public void addStatesParameter() {
-
-    }
-
-    public void removeStatesParameter() {
-    }
-
-    public SubAgent getOwnerAgent() {
-        return ownerAgent;
-    }
-
-    public void setOwnerAgent(SubAgent ownerAgent) {
-        this.ownerAgent = ownerAgent;
-    }
-
     public Map<Integer, StateParameter> getStatesMap() {
         return stateParametersMap;
     }
 
     public void setStatesMap(Map<Integer, StateParameter> statesMap) {
         this.stateParametersMap = statesMap;
+    }
+
+    //TO CHANGE!!!
+    @Override
+    public String toString() {
+        StringBuilder strBuff = new StringBuilder();
+        strBuff.append("SubState with statesParameters: { ");
+        for (StateParameter stateParam : statesParametersSet) {
+            strBuff.append(stateParam.getParameterName()).append(" ; ");
+        }
+        return strBuff.append(" }").toString();
     }
 }
